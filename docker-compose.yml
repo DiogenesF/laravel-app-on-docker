@@ -3,6 +3,9 @@ version: '3'
 networks:
   laravel:
 
+volumes:
+  dbdata:
+
 services:
   site:
     build:
@@ -10,19 +13,17 @@ services:
       dockerfile: nginx.dockerfile
     container_name: nginx
     ports:
-      - 80:80
+      - 8088:80
     volumes:
       - ./src:/var/www/html:delegated
     depends_on:
       - php
-      - redis
       - mysql
-      - mailhog
     networks:
       - laravel
 
   mysql:
-    image: mysql:5.7.29
+    image: mysql
     container_name: mysql
     restart: unless-stopped
     tty: true
@@ -35,8 +36,25 @@ services:
       MYSQL_ROOT_PASSWORD: secret
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
+    volumes:
+      - dbdata:/var/lib/mysql
     networks:
       - laravel
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: pma
+    links:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+    networks: 
+      - laravel
+    ports:
+      - 8081:80
 
   php:
     build:
@@ -45,15 +63,8 @@ services:
     container_name: php
     volumes:
       - ./src:/var/www/html:delegated
-    networks:
-      - laravel
-
-  redis:
-    image: redis:alpine
-    container_name: redis
-    restart: unless-stopped
-    ports:
-      - 6379:6379
+    links:
+      - mysql
     networks:
       - laravel
 
@@ -68,40 +79,7 @@ services:
     depends_on:
       - php
     user: laravel
-    entrypoint: ['composer', '--ignore-platform-reqs']
+    entrypoint: ['composer']
     networks:
       - laravel
 
-  npm:
-    image: node:13.7
-    container_name: npm
-    volumes:
-      - ./src:/var/www/html
-    working_dir: /var/www/html
-    entrypoint: ['npm']
-    networks:
-      - laravel
-
-  artisan:
-    build:
-      context: .
-      dockerfile: php.dockerfile
-    container_name: artisan
-    volumes:
-      - ./src:/var/www/html:delegated
-    depends_on:
-      - mysql
-    working_dir: /var/www/html
-    user: laravel
-    entrypoint: ['php', '/var/www/html/artisan']
-    networks:
-      - laravel
-
-  mailhog:
-    image: mailhog/mailhog:latest
-    container_name: mailhog
-    ports:
-      - 1025:1025
-      - 8025:8025
-    networks:
-      - laravel
