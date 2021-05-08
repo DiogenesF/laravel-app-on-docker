@@ -1,4 +1,5 @@
 All the configuration was based on this repo: https://github.com/aschmelyun/docker-compose-laravel
+
 You can check an article from the author [here](https://dev.to/aschmelyun/the-beauty-of-docker-for-local-laravel-development-13c0).
 
 ## Comments about the application
