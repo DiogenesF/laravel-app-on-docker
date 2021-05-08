@@ -7,24 +7,28 @@ This application is actually a project that I had to do when I was taking classe
 
 ## Getting started
 
-Clone the repo, navigate in your terminal to the directory you cloned this, and run the containers with the following command `docker-compose up -d --build`.
+Clone the repo, navigate in your terminal to the directory you cloned this, and run the containers with the following command 
+
+`docker-compose up -d --build`.
 
 As this repo already contains a simple laravel application, you will need to do everything that you would normally do for setting up a cloned laravel app
 
 First create a .env file, the information about the DB must match the information in the container, in our case, our config for setting up the database will be the following:
 
-DB_CONNECTION=mysql 
+```
+DB_CONNECTION=mysql
 DB_HOST=mysql
 DB_PORT=3306
 DB_DATABASE=homestead
 DB_USERNAME=homestead
 DB_PASSWORD=secret
+```
 
 It's worth saying that the DB_HOST must be the name of the database service in the docker-compose.yml, in our case it's just mysql.
 
 As we have a container for the composer, you can just run the following command in the terminal:
 
-- `docker-compose run --rm composer update`
+- `docker-compose run --rm composer install`
 
 and all the dependencies will be installed.
 
