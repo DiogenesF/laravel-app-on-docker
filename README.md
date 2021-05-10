@@ -3,6 +3,7 @@ All the configuration was based on this repo: https://github.com/aschmelyun/dock
 You can check an article from the author [here](https://dev.to/aschmelyun/the-beauty-of-docker-for-local-laravel-development-13c0).
 
 ## Comments about the application
+
 This application is actually a project that I had to do when I was taking classes about databases. There's a pretty simple interface just to interact with the database to make sure that the whole application works properly. Everything in the application was named using Portuguese words.
 
 ## Getting started
