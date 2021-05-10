@@ -31,7 +31,7 @@ As we have a container for the composer, you can just run the following command 
 
 - `docker-compose run --rm composer install`
 
-and all the dependencies will be installed.
+and now all the dependencies will be installed.
 
 Now you will have to run the necessary commands related to artisan, you can run the following command to access the php container
 
