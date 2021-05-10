@@ -45,7 +45,7 @@ once you're in the container, you can run
 - `php artisan key:generate`
 - `php artisan migrate`
  
-And now you're ready to go!
+And now you're ready to go!!
 
 You will be able to access the phpmyadmin service in the `localhost:8081` and access the laravel application in the `localhost:8088`. You can change these ports in the docker-compose.yml.
 
